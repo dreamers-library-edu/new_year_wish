@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>New Year 2026 Wishes</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle at top, #240046, #000);
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    color: white;
+    text-align: center;
+}
+
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+}
+
+h1 {
+    font-size: 2.6em;
+    animation: glow 2s infinite alternate;
+}
+
+h2 {
+    color: gold;
+    margin-top: 10px;
+}
+
+p {
+    margin-top: 12px;
+    font-size: 1.05em;
+    line-height: 1.5;
+}
+
+input {
+    padding: 10px;
+    width: 230px;
+    border-radius: 20px;
+    border: none;
+    text-align: center;
+    font-size: 16px;
+}
+
+button {
+    margin-top: 16px;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    background: #ff006e;
+    color: white;
+}
+
+#countdown {
+    margin-top: 15px;
+    font-size: 1.2em;
+    color: #00ffff;
+}
+
+/* Director Photo */
+.director-img {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid gold;
+    margin-top: 15px;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px #ff00ff; }
+    to { text-shadow: 0 0 25px #00ffff; }
+}
+
+/* Fireworks */
+.firework {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    animation: blast 1.5s infinite;
+}
+
+@keyframes blast {
+    0% { transform: scale(0); opacity: 1; }
+    100% { transform: scale(18); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Student Name Input -->
+    <div id="nameBox">
+        <h2>Student Name Enter Kare 🎓</h2>
+        <input type="text" id="studentName" placeholder="Student name">
+        <br>
+        <button onclick="start()">Continue</button>
+    </div>
+    
+
+    <!-- Greeting Section -->
+    <div id="greetBox" style="display:none;">
+        <h1 id="mainText"></h1>
+
+        <p>
+            Best Wishes to <b>Dreamers Library & RK Tuition</b><br>
+            for a Bright, Successful and Inspiring New Year 2026.
+        </p>
+
+        <p>
+            May this year bring discipline, confidence,<br>
+            academic excellence and great success<br>
+            to every student.
+        </p>
+
+        <!-- Director Photo -->
+        <img src="director.jpeg" alt="Director" class="director-img">
+
+        <p style="margin-top:12px; font-weight:bold;">
+            Dreamers Library & RK Tuition
+        </p>
+
+        <p>
+            Director: Ranjeet Kumar
+        </p>
+
+        <div id="countdown"></div>
+
+        <button onclick="playMusic()">🎵 Play Music</button>
+    </div>
+
+</div>
+
+<audio id="bgMusic" loop></audio>
+
+<script>
+// ---------- START ----------
+function start() {
+    let name = document.getElementById("studentName").value.trim();
+    if (name === "") name = "Student";
+
+    document.getElementById("mainText").innerText =
+        "🎆 Happy New Year 2026, " + name + " 🎆";
+
+    document.getElementById("nameBox").style.display = "none";
+    document.getElementById("greetBox").style.display = "block";
+
+    startCountdown();
+    selectRandomSong();
+}
+
+// ---------- COUNTDOWN ----------
+function startCountdown() {
+    const newYear = new Date("Jan 1, 2026 00:00:00").getTime();
+
+    setInterval(() => {
+        const now = new Date().getTime();
+        const diff = newYear - now;
+
+        if (diff <= 0) {
+            document.getElementById("countdown").innerHTML = "🎉 Welcome 2026 🎉";
+            return;
+        }
+
+        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const m = Math.floor((diff / (1000 * 60)) % 60);
+        const s = Math.floor((diff / 1000) % 60);
+
+        document.getElementById("countdown").innerHTML =
+            `⏳ ${d}d ${h}h ${m}m ${s}s`;
+    }, 1000);
+}
+
+// ---------- RANDOM MUSIC ----------
+const songs = [
+    "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+    "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+    "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+    "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
+    "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3"
+];
+
+const music = document.getElementById("bgMusic");
+
+function selectRandomSong() {
+    music.src = songs[Math.floor(Math.random() * songs.length)];
+}
+
+function playMusic() {
+    music.play();
+}
+
+// ---------- FIREWORKS ----------
+function firework() {
+    const f = document.createElement("div");
+    f.className = "firework";
+    f.style.left = Math.random() * innerWidth + "px";
+    f.style.top = Math.random() * innerHeight + "px";
+    f.style.background = `hsl(${Math.random()*360},100%,50%)`;
+    document.body.appendChild(f);
+    setTimeout(() => f.remove(), 1500);
+}
+setInterval(firework, 250);
+</script>
+
+</body>
+</html>
